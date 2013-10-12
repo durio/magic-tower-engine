@@ -48,8 +48,10 @@ public abstract class AbstractGame implements TileArrayGame {
 
 	@Override
 	public Event initialize() throws DataException {
-		this.gameData = this.initializeGameData();
-		return this.initializeFirstEvent();
+		GameData gameData = this.initializeGameData();
+		Event event = this.initializeFirstEvent();
+		this.setGameData(gameData);
+		return event;
 	}
 
 	protected abstract AbstractEvent initializeFirstEvent()

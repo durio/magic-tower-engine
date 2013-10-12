@@ -8,6 +8,8 @@ public final class Coordinate implements Serializable {
 
 	private int z, x, y;
 
+	public static Coordinate ZERO = new Coordinate(0, 0, 0);
+
 	public Coordinate(int z, int x, int y) {
 		this.z = z;
 		this.x = x;
@@ -40,4 +42,17 @@ public final class Coordinate implements Serializable {
 		return c.z == this.z && c.x == this.x && c.y == this.y;
 	}
 
+	public int compareCoordinate(Coordinate coord) {
+		if (this.x < coord.x && this.y < coord.y && this.z < coord.z) {
+			return -2;
+		} else if (this.x > coord.x && this.y > coord.y && this.z > coord.z) {
+			return 2;
+		} else if (this.x < coord.x || this.y < coord.y || this.z < coord.z) {
+			return -1;
+		} else if (this.x > coord.x || this.y > coord.y || this.z > coord.z) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
 }

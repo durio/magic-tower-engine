@@ -5,6 +5,7 @@ import java.util.Map;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.AbstractGame;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.Coordinate;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.Event;
+import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameData;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameFailureTerminationException;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameRenderer;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameSuccessTerminationException;
@@ -14,6 +15,7 @@ public class StandardGame extends AbstractGame {
 
 	protected StandardGameData gameData;
 	protected StandardGameDataFactory gameDataFactory;
+	protected Coordinate maximumCoordinate;
 
 	public StandardGame(String data) {
 		this(new StandardGameDataFactory(data));
@@ -24,11 +26,20 @@ public class StandardGame extends AbstractGame {
 	}
 
 	@Override
+	public void setGameData(GameData gameData) {
+		this.gameData = (StandardGameData) gameData;
+		this.maximumCoordinate = null;
+	}
+
+	@Override
 	public Coordinate getMaximumCoordinate() {
-		int maxZ = this.gameData.getTiles().length - 1;
-		int maxX = this.gameData.getTiles()[0].length - 1;
-		int maxY = this.gameData.getTiles()[0][0].length - 1;
-		return new Coordinate(maxZ, maxX, maxY);
+		if (this.maximumCoordinate == null) {
+			int maxZ = this.gameData.getTiles().length - 1;
+			int maxX = this.gameData.getTiles()[0].length - 1;
+			int maxY = this.gameData.getTiles()[0][0].length - 1;
+			this.maximumCoordinate = new Coordinate(maxZ, maxX, maxY);
+		}
+		return this.maximumCoordinate;
 	}
 
 	@Override
@@ -43,8 +54,18 @@ public class StandardGame extends AbstractGame {
 	@Override
 	public StandardEvent attemptMoveTo(Coordinate coord,
 			Map<String, Object> args) {
-		// TODO Auto-generated method stub
-		return null;
+		Coordinate sourceCoord = this.getCurrentCoordinate();
+		// Out of bound. Keep not moved.
+		if (coord.compareCoordinate(Coordinate.ZERO) < 0
+				|| coord.compareCoordinate(this.getMaximumCoordinate()) > 0) {
+			return new StandardEvent(sourceCoord);
+		}
+		StandardTile tile = (StandardTile) this.gameData.getTile(coord);
+		StandardTile sourceTile = (StandardTile) this.gameData
+				.getTile(sourceCoord);
+		StandardEvent event = tile.enter(coord, sourceCoord,
+				(CharacterTile) sourceTile, args, this);
+		return event;
 	}
 
 	@Override
