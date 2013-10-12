@@ -12,6 +12,7 @@ public class StandardGameData extends AbstractGameData {
 
 	protected List<String> failureAttributeChecks;
 	protected List<String> successAttributeChecks;
+	protected String createdFrom;
 
 	public StandardGameData(Coordinate currentCoordinate,
 			Map<String, Object> attributes, StandardTile[][][] tiles) {

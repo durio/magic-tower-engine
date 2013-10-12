@@ -10,6 +10,8 @@ import cn.edu.tsinghua.academic.c00740273.magictower.engine.Coordinate;
 
 public class FightMixin implements RegularTileMixin {
 
+	private static final long serialVersionUID = 1L;
+
 	protected String attackAttributeName;
 	protected String defenseAttributeName;
 	protected String healthAttributeName;

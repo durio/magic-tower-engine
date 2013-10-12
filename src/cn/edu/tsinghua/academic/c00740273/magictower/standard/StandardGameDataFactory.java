@@ -52,6 +52,7 @@ public class StandardGameDataFactory {
 		this.gameData = new StandardGameData(startCoord, attributes, tiles);
 		this.gameData.failureAttributeChecks = failureAttributeChecks;
 		this.gameData.successAttributeChecks = successAttributeChecks;
+		this.gameData.createdFrom = this.data;
 		this.firstEvent = new StandardEvent(startCoord);
 		this.renderer = renderer;
 	}

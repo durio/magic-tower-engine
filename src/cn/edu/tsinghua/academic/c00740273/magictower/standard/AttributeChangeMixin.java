@@ -9,6 +9,8 @@ import cn.edu.tsinghua.academic.c00740273.magictower.engine.Coordinate;
 
 public class AttributeChangeMixin implements RegularTileMixin {
 
+	private static final long serialVersionUID = 1L;
+
 	protected String attributeName;
 	protected String operator;
 	protected long longOperand;

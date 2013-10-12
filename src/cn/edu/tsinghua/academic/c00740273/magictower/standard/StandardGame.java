@@ -18,6 +18,10 @@ public class StandardGame extends AbstractGame {
 	protected StandardGameDataFactory gameDataFactory;
 	protected Coordinate maximumCoordinate;
 
+	public StandardGame() {
+		// For unserialization.
+	}
+
 	public StandardGame(String data) {
 		this(new StandardGameDataFactory(data));
 	}
@@ -52,11 +56,21 @@ public class StandardGame extends AbstractGame {
 
 	@Override
 	public GameRenderer getRenderer() {
-		try {
-			return this.gameDataFactory.makeRenderer();
-		} catch (DataFormatException e) {
-			return null;
+		if (this.gameDataFactory == null && this.gameData != null
+				&& this.gameData.createdFrom != null) {
+			this.gameDataFactory = new StandardGameDataFactory(
+					this.gameData.createdFrom);
 		}
+		if (this.gameDataFactory != null) {
+			try {
+				// This may cause a re-parse for games from unserialization,
+				// which is slow, but we don't have another way to get the
+				// renderer object back...
+				return this.gameDataFactory.makeRenderer();
+			} catch (DataFormatException e) {
+			}
+		}
+		return null;
 	}
 
 	@Override
