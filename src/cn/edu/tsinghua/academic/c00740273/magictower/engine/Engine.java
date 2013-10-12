@@ -246,6 +246,20 @@ public class Engine {
 	}
 
 	/**
+	 * Fetch the event when the character moves to the given coordinate.
+	 * 
+	 * Does not check game termination.
+	 * 
+	 * @param coord
+	 * @param args
+	 * @return
+	 */
+	public Event attemptMoveTo(Coordinate coord, Map<String, Object> args) {
+		this.checkGameLoad();
+		return this.game.attemptMoveTo(coord, args);
+	}
+
+	/**
 	 * Get the current position of the character.
 	 * 
 	 * @return

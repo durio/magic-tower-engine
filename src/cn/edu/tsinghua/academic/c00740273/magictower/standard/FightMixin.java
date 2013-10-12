@@ -1,5 +1,6 @@
 package cn.edu.tsinghua.academic.c00740273.magictower.standard;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONException;
@@ -60,9 +61,20 @@ public class FightMixin implements RegularTileMixin {
 		long selfAttack = selfAttackObj.longValue();
 		long selfDefense = selfDefenseObj.longValue();
 		long selfHealth = selfHealthObj.longValue();
+		Map<String, Long> fightDetails = new HashMap<String, Long>();
+		fightDetails.put("opponent-attack-before", opponentAttack);
+		fightDetails.put("opponent-defense-before", opponentDefense);
+		fightDetails.put("opponent-health-before", opponentHealth);
+		fightDetails.put("self-attack-before", selfAttack);
+		fightDetails.put("self-defense-before", selfDefense);
+		fightDetails.put("self-health-before", selfHealth);
 		if (selfAttack <= opponentDefense) {
-			event.setAttributeChange(this.deathAttributeName, -1);
+			fightDetails.put("quick-death", -1L);
+			event.setAttributeChange(this.deathAttributeName, -1L);
+			event.addExtraInformation("fight-details", fightDetails);
 			return true;
+		} else {
+			fightDetails.put("quick-death", 0L);
 		}
 		while (opponentHealth > 0) {
 			opponentHealth -= selfAttack - opponentDefense;
@@ -71,6 +83,13 @@ public class FightMixin implements RegularTileMixin {
 		event.setAttributeChange(this.attackAttributeName, selfAttack);
 		event.setAttributeChange(this.defenseAttributeName, selfDefense);
 		event.setAttributeChange(this.healthAttributeName, selfHealth);
+		fightDetails.put("opponent-attack-after", opponentAttack);
+		fightDetails.put("opponent-defense-after", opponentDefense);
+		fightDetails.put("opponent-health-after", opponentHealth);
+		fightDetails.put("self-attack-after", selfAttack);
+		fightDetails.put("self-defense-after", selfDefense);
+		fightDetails.put("self-health-after", selfHealth);
+		event.addExtraInformation("fight-details", fightDetails);
 		return true;
 	}
 }
