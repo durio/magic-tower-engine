@@ -27,8 +27,8 @@ public class RegularTile implements StandardTile {
 			this.mixin = ClassUtils.makeMixin(dataMixinValue);
 		}
 		JSONObject dataRendering = dataTileValue.optJSONObject("rendering");
+		this.renderingData = new HashMap<String, Object>();
 		if (dataRendering != null) {
-			this.renderingData = new HashMap<String, Object>();
 			@SuppressWarnings("unchecked")
 			Iterator<String> renderingKeyIterator = dataRendering.keys();
 			while (renderingKeyIterator.hasNext()) {
@@ -37,8 +37,10 @@ public class RegularTile implements StandardTile {
 				this.renderingData.put(renderingName, renderingValue);
 			}
 		}
+		this.renderingData.put("character", false);
 	}
 
+	@Override
 	public Map<String, Object> getRenderingData() {
 		return this.renderingData;
 	}

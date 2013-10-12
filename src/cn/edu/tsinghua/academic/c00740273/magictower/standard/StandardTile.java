@@ -7,6 +7,8 @@ import cn.edu.tsinghua.academic.c00740273.magictower.engine.Tile;
 
 public interface StandardTile extends Tile, Initializable {
 
+	public Map<String, Object> getRenderingData();
+
 	public StandardEvent enter(Coordinate coord, Coordinate sourceCoord,
 			CharacterTile sourceTile, Map<String, Object> args,
 			StandardGame game);

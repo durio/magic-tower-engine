@@ -1,5 +1,6 @@
 package cn.edu.tsinghua.academic.c00740273.magictower.standard;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONException;
@@ -15,6 +16,7 @@ public class CharacterTile implements StandardTile {
 	private static final long serialVersionUID = 1L;
 
 	protected RegularTile tileAfterLeave;
+	protected Map<String, Object> renderingData;
 
 	public CharacterTile() {
 		super();
@@ -22,6 +24,17 @@ public class CharacterTile implements StandardTile {
 
 	public CharacterTile(RegularTile tileAfterLeave) {
 		this.tileAfterLeave = tileAfterLeave;
+	}
+
+	@Override
+	public Map<String, Object> getRenderingData() {
+		if (this.renderingData == null) {
+			Map<String, Object> underlying = this.tileAfterLeave
+					.getRenderingData();
+			this.renderingData = new HashMap<String, Object>(underlying);
+			this.renderingData.put("character", true);
+		}
+		return this.renderingData;
 	}
 
 	@Override
