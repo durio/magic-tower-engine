@@ -4,7 +4,7 @@ import java.util.Map;
 
 public interface Game {
 
-	public Event initialize();
+	public Event initialize() throws DataException;
 
 	public GameData getGameData();
 

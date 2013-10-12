@@ -47,13 +47,15 @@ public abstract class AbstractGame implements TileArrayGame {
 	}
 
 	@Override
-	public Event initialize() {
+	public Event initialize() throws DataException {
 		this.gameData = this.initializeGameData();
 		return this.initializeFirstEvent();
 	}
 
-	protected abstract Event initializeFirstEvent();
+	protected abstract AbstractEvent initializeFirstEvent()
+			throws DataException;
 
-	protected abstract AbstractGameData initializeGameData();
+	protected abstract AbstractGameData initializeGameData()
+			throws DataException;
 
 }

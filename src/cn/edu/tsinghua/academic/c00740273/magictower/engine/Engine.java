@@ -84,8 +84,9 @@ public class Engine {
 	 * 
 	 * @param game
 	 * @return
+	 * @throws DataException
 	 */
-	public Event loadGame(Game game) {
+	public Event loadGame(Game game) throws DataException {
 		Event event = game.initialize();
 		this.setGame(game);
 		return event;

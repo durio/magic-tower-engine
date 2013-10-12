@@ -31,11 +31,4 @@ public interface Event {
 	 * @return
 	 */
 	public Map<Coordinate, Tile> getTileChanges();
-
-	/**
-	 * Get extra information that doesn't affect real logic.
-	 * 
-	 * @return
-	 */
-	public Map<String, Object> getExtraInformation();
 }

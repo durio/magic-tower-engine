@@ -9,6 +9,13 @@ public abstract class AbstractGameData implements GameData {
 	protected Map<String, Object> attributes;
 	protected Tile[][][] tiles;
 
+	public AbstractGameData(Coordinate currentCoordinate,
+			Map<String, Object> attributes, Tile[][][] tiles) {
+		this.currentCoordinate = currentCoordinate;
+		this.attributes = attributes;
+		this.tiles = tiles;
+	}
+
 	public Coordinate getCurrentCoordinate() {
 		return this.currentCoordinate;
 	}
