@@ -30,7 +30,8 @@ public class BatchMixin implements RegularTileMixin {
 		for (RegularTileMixin mixin : this.mixins) {
 			if (!mixin.enter(event, coord, tile, sourceCoord, sourceTile, args,
 					game)) {
-				return false;
+				// Let's have it affect only one level of BatchMixin.
+				return true;
 			}
 		}
 		return true;

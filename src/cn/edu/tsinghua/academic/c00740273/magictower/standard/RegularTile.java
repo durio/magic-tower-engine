@@ -22,7 +22,7 @@ public class RegularTile implements StandardTile {
 	@Override
 	public void initialize(JSONObject dataTileValue) throws JSONException,
 			DataFormatException {
-		JSONObject dataMixinValue = dataTileValue.optJSONObject("mixins");
+		JSONObject dataMixinValue = dataTileValue.optJSONObject("mixin");
 		if (dataMixinValue != null) {
 			this.mixin = ClassUtils.makeMixin(dataMixinValue);
 		}

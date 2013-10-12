@@ -27,6 +27,7 @@ public class AccessibleMixin implements RegularTileMixin {
 			event.setTileChange(coord, new CharacterTile(tile));
 		}
 		event.setTileChange(sourceCoord, sourceTile.leave());
+		event.setCoordinate(coord);
 		return true;
 	}
 

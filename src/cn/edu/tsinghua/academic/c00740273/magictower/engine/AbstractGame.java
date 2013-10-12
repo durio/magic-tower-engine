@@ -12,38 +12,40 @@ public abstract class AbstractGame implements TileArrayGame {
 	}
 
 	@Override
-	public void setGameData(GameData gameData) {
+	public GameData setGameData(GameData gameData) {
+		GameData prev = this.gameData;
 		this.gameData = (AbstractGameData) gameData;
+		return prev;
 	}
 
 	@Override
 	public Coordinate getCurrentCoordinate() {
-		return this.gameData.getCurrentCoordinate();
+		return this.getGameData().getCurrentCoordinate();
 	}
 
 	@Override
 	public Object getAttribute(String key) {
-		return this.gameData.getAttribute(key);
+		return this.getGameData().getAttribute(key);
 	}
 
 	@Override
 	public Map<String, Object> getAttributes() {
-		return this.gameData.getAttributes();
+		return this.getGameData().getAttributes();
 	}
 
 	@Override
 	public Tile getTile(Coordinate coord) {
-		return this.gameData.getTile(coord);
+		return this.getGameData().getTile(coord);
 	}
 
 	@Override
 	public Tile[][][] getTiles() {
-		return this.gameData.getTiles();
+		return this.getGameData().getTiles();
 	}
 
 	@Override
 	public void applyEvent(Event event) {
-		this.gameData.applyEvent(event);
+		this.getGameData().applyEvent(event);
 	}
 
 	@Override

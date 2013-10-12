@@ -42,14 +42,18 @@ public final class Coordinate implements Serializable {
 		return c.z == this.z && c.x == this.x && c.y == this.y;
 	}
 
-	public int compareCoordinate(Coordinate coord) {
-		if (this.x < coord.x && this.y < coord.y && this.z < coord.z) {
+	public int compareCoordinate(Coordinate coord, int expected) {
+		if (this.x < coord.x && this.y < coord.y && this.z < coord.z
+				&& expected <= 0) {
 			return -2;
-		} else if (this.x > coord.x && this.y > coord.y && this.z > coord.z) {
+		} else if (this.x > coord.x && this.y > coord.y && this.z > coord.z
+				&& expected >= 0) {
 			return 2;
-		} else if (this.x < coord.x || this.y < coord.y || this.z < coord.z) {
+		} else if ((this.x < coord.x || this.y < coord.y || this.z < coord.z)
+				&& expected <= 0) {
 			return -1;
-		} else if (this.x > coord.x || this.y > coord.y || this.z > coord.z) {
+		} else if ((this.x > coord.x || this.y > coord.y || this.z > coord.z)
+				&& expected >= 0) {
 			return 1;
 		} else {
 			return 0;

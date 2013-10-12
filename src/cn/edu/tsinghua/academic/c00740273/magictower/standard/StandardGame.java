@@ -3,6 +3,7 @@ package cn.edu.tsinghua.academic.c00740273.magictower.standard;
 import java.util.Map;
 
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.AbstractGame;
+import cn.edu.tsinghua.academic.c00740273.magictower.engine.AbstractGameData;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.Coordinate;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.Event;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameData;
@@ -26,9 +27,16 @@ public class StandardGame extends AbstractGame {
 	}
 
 	@Override
-	public void setGameData(GameData gameData) {
+	public AbstractGameData getGameData() {
+		return this.gameData;
+	}
+
+	@Override
+	public GameData setGameData(GameData gameData) {
+		GameData prev = this.gameData;
 		this.gameData = (StandardGameData) gameData;
 		this.maximumCoordinate = null;
+		return prev;
 	}
 
 	@Override
@@ -56,8 +64,8 @@ public class StandardGame extends AbstractGame {
 			Map<String, Object> args) {
 		Coordinate sourceCoord = this.getCurrentCoordinate();
 		// Out of bound. Keep not moved.
-		if (coord.compareCoordinate(Coordinate.ZERO) < 0
-				|| coord.compareCoordinate(this.getMaximumCoordinate()) > 0) {
+		if (coord.compareCoordinate(Coordinate.ZERO, -1) < 0
+				|| coord.compareCoordinate(this.getMaximumCoordinate(), 1) > 0) {
 			return new StandardEvent(sourceCoord);
 		}
 		StandardTile tile = (StandardTile) this.gameData.getTile(coord);
@@ -71,13 +79,19 @@ public class StandardGame extends AbstractGame {
 	@Override
 	public void simulateEvent(Event event) throws GameTerminationException {
 		for (String key : this.gameData.failureAttributeChecks) {
-			if (((Long) this.gameData.getAttribute(key)).longValue() < 0) {
+			if (!event.getAttributeChanges().containsKey(key)) {
+				continue;
+			}
+			if (((Number) event.getAttributeChanges().get(key)).longValue() < 0) {
 				throw new GameFailureTerminationException(key
 						+ " is now negative.");
 			}
 		}
 		for (String key : this.gameData.successAttributeChecks) {
-			if (((Long) this.gameData.getAttribute(key)).longValue() > 0) {
+			if (!event.getAttributeChanges().containsKey(key)) {
+				continue;
+			}
+			if (((Number) event.getAttributeChanges().get(key)).longValue() > 0) {
 				throw new GameSuccessTerminationException(key
 						+ " is now positive.");
 			}

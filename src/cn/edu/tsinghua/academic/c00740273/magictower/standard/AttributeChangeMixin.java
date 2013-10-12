@@ -40,11 +40,11 @@ public class AttributeChangeMixin implements RegularTileMixin {
 			oldValue = game.getAttribute(this.attributeName);
 		}
 		if (this.operator.equals("+")) {
-			event.setAttributeChange(this.attributeName, ((Long) oldValue)
-					+ this.longOperand);
+			event.setAttributeChange(this.attributeName,
+					((Number) oldValue).longValue() + this.longOperand);
 		} else if (this.operator.equals("*")) {
-			event.setAttributeChange(this.attributeName, ((Double) oldValue)
-					* this.doubleOperand);
+			event.setAttributeChange(this.attributeName,
+					((Number) oldValue).doubleValue() * this.doubleOperand);
 		} else if (this.operator.equals("=")) {
 			event.setAttributeChange(this.attributeName, this.objectOperand);
 		}

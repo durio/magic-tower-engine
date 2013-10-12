@@ -39,21 +39,27 @@ public class FightMixin implements RegularTileMixin {
 		long opponentAttack = this.opponentInitialAttack;
 		long opponentDefense = this.opponentInitialDefense;
 		long opponentHealth = this.opponentInitialHealth;
-		Long selfAttack = (Long) event.getAttributeChanges().get(
+		Number selfAttackObj = (Number) event.getAttributeChanges().get(
 				this.attackAttributeName);
-		Long selfDefense = (Long) event.getAttributeChanges().get(
+		Number selfDefenseObj = (Number) event.getAttributeChanges().get(
 				this.defenseAttributeName);
-		Long selfHealth = (Long) event.getAttributeChanges().get(
+		Number selfHealthObj = (Number) event.getAttributeChanges().get(
 				this.healthAttributeName);
-		if (selfAttack == null) {
-			selfAttack = (Long) game.getAttribute(this.attackAttributeName);
+		if (selfAttackObj == null) {
+			selfAttackObj = (Number) game
+					.getAttribute(this.attackAttributeName);
 		}
-		if (selfDefense == null) {
-			selfDefense = (Long) game.getAttribute(this.defenseAttributeName);
+		if (selfDefenseObj == null) {
+			selfDefenseObj = (Number) game
+					.getAttribute(this.defenseAttributeName);
 		}
-		if (selfHealth == null) {
-			selfHealth = (Long) game.getAttribute(this.healthAttributeName);
+		if (selfHealthObj == null) {
+			selfHealthObj = (Number) game
+					.getAttribute(this.healthAttributeName);
 		}
+		long selfAttack = selfAttackObj.longValue();
+		long selfDefense = selfDefenseObj.longValue();
+		long selfHealth = selfHealthObj.longValue();
 		if (selfAttack <= opponentDefense) {
 			event.setAttributeChange(this.deathAttributeName, -1);
 			return true;

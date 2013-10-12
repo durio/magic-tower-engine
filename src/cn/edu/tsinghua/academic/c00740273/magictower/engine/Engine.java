@@ -225,7 +225,9 @@ public class Engine {
 			throws GameTerminationException {
 		this.checkGameLoad();
 		Event event = this.moveEvent(coord, args);
-		this.game.applyEvent(event);
+		if (event != null) {
+			this.game.applyEvent(event);
+		}
 		return event;
 	}
 

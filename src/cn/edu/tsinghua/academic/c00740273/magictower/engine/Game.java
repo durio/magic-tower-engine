@@ -8,7 +8,7 @@ public interface Game {
 
 	public GameData getGameData();
 
-	public void setGameData(GameData gameData);
+	public GameData setGameData(GameData gameData);
 
 	public Coordinate getCurrentCoordinate();
 
