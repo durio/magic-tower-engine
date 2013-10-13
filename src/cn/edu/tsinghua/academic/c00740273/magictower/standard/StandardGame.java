@@ -3,7 +3,6 @@ package cn.edu.tsinghua.academic.c00740273.magictower.standard;
 import java.util.Map;
 
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.AbstractGame;
-import cn.edu.tsinghua.academic.c00740273.magictower.engine.AbstractGameData;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.Coordinate;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.Event;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameData;
@@ -14,7 +13,6 @@ import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameTerminationExcep
 
 public class StandardGame extends AbstractGame {
 
-	protected StandardGameData gameData;
 	protected StandardGameDataFactory gameDataFactory;
 	protected Coordinate maximumCoordinate;
 
@@ -31,8 +29,8 @@ public class StandardGame extends AbstractGame {
 	}
 
 	@Override
-	public AbstractGameData getGameData() {
-		return this.gameData;
+	public StandardGameData getGameData() {
+		return (StandardGameData) this.gameData;
 	}
 
 	@Override
@@ -57,9 +55,9 @@ public class StandardGame extends AbstractGame {
 	@Override
 	public GameRenderer getRenderer() {
 		if (this.gameDataFactory == null && this.gameData != null
-				&& this.gameData.createdFrom != null) {
+				&& this.getGameData().createdFrom != null) {
 			this.gameDataFactory = new StandardGameDataFactory(
-					this.gameData.createdFrom);
+					this.getGameData().createdFrom);
 		}
 		if (this.gameDataFactory != null) {
 			try {
@@ -92,7 +90,7 @@ public class StandardGame extends AbstractGame {
 
 	@Override
 	public void simulateEvent(Event event) throws GameTerminationException {
-		for (String key : this.gameData.failureAttributeChecks) {
+		for (String key : this.getGameData().failureAttributeChecks) {
 			if (!event.getAttributeChanges().containsKey(key)) {
 				continue;
 			}
@@ -101,7 +99,7 @@ public class StandardGame extends AbstractGame {
 						+ " is now negative.", event);
 			}
 		}
-		for (String key : this.gameData.successAttributeChecks) {
+		for (String key : this.getGameData().successAttributeChecks) {
 			if (!event.getAttributeChanges().containsKey(key)) {
 				continue;
 			}
