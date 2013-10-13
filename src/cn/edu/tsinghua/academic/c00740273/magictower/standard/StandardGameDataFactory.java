@@ -20,6 +20,7 @@ public class StandardGameDataFactory {
 	protected StandardGameData gameData;
 	protected StandardEvent firstEvent;
 	protected GameRenderer renderer;
+	protected Coordinate startCoord;
 
 	public StandardGameDataFactory(String data) {
 		this.data = data;
@@ -29,16 +30,14 @@ public class StandardGameDataFactory {
 	public void make() throws DataFormatException {
 		Map<String, Object> attributes;
 		StandardTile[][][] tiles;
-		Coordinate startCoord;
 		GameRenderer renderer;
 		List<String> failureAttributeChecks;
 		List<String> successAttributeChecks;
 		try {
 			JSONObject dataRoot = new JSONObject(this.data);
 
-			tiles = this.makeTiles(dataRoot);
+			tiles = this.makeTiles(dataRoot); // Populates this.startCoord too.
 			attributes = this.makeAttributes(dataRoot);
-			startCoord = this.makeStartCoord(dataRoot, tiles);
 			failureAttributeChecks = this.makeStringList(dataRoot,
 					"failure-checks");
 			successAttributeChecks = this.makeStringList(dataRoot,
@@ -49,11 +48,11 @@ public class StandardGameDataFactory {
 		} catch (JSONException e) {
 			throw new DataFormatException(e);
 		}
-		this.gameData = new StandardGameData(startCoord, attributes, tiles);
+		this.gameData = new StandardGameData(this.startCoord, attributes, tiles);
 		this.gameData.failureAttributeChecks = failureAttributeChecks;
 		this.gameData.successAttributeChecks = successAttributeChecks;
 		this.gameData.createdFrom = this.data;
-		this.firstEvent = new StandardEvent(startCoord);
+		this.firstEvent = new StandardEvent(this.startCoord);
 		this.renderer = renderer;
 	}
 
@@ -77,6 +76,9 @@ public class StandardGameDataFactory {
 				for (int y = 0; y < sizeY; y++) {
 					String tileId = dataTilesX.getString(y);
 					tiles[z][x][y] = this.getTile(tileId, dataTileValues);
+					if (tiles[z][x][y] instanceof CharacterTile) {
+						this.startCoord = new Coordinate(z, x, y);
+					}
 				}
 			}
 		}
@@ -95,19 +97,6 @@ public class StandardGameDataFactory {
 			attributes.put(attributeName, attributeValue);
 		}
 		return attributes;
-	}
-
-	protected Coordinate makeStartCoord(JSONObject dataRoot,
-			StandardTile[][][] tiles) throws JSONException, DataFormatException {
-		JSONObject dataStart = dataRoot.getJSONObject("start");
-		int startZ = dataStart.getInt("z");
-		int startX = dataStart.getInt("x");
-		int startY = dataStart.getInt("y");
-		if (startZ < 0 || startX < 0 || startY < 0 || startZ >= tiles.length
-				|| startX >= tiles[0].length || startY >= tiles[0][0].length) {
-			throw new DataFormatException("Invalid starting point");
-		}
-		return new Coordinate(startZ, startX, startY);
 	}
 
 	protected List<String> makeStringList(JSONObject dataRoot, String location)
