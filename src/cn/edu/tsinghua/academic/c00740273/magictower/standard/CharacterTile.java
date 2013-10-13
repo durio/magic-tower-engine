@@ -40,8 +40,8 @@ public class CharacterTile implements StandardTile {
 	@Override
 	public void initialize(JSONObject dataTileValue) throws JSONException,
 			DataFormatException {
-		this.tileAfterLeave = new RegularTile();
-		this.tileAfterLeave.initialize(dataTileValue);
+		JSONObject dataBaseValue = dataTileValue.getJSONObject("base");
+		this.tileAfterLeave = (RegularTile) ClassUtils.makeTile(dataBaseValue);
 	}
 
 	@Override
