@@ -53,6 +53,6 @@ public class AttributeSelectiveMixin implements RegularTileMixin {
 						game);
 			}
 		}
-		return false;
+		return true;
 	}
 }
