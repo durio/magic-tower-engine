@@ -24,4 +24,8 @@ public class GameSuccessTerminationException extends GameTerminationException {
 		super(cause);
 	}
 
+	public GameSuccessTerminationException(String message, Event event) {
+		super(message, event);
+	}
+
 }

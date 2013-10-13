@@ -98,7 +98,7 @@ public class StandardGame extends AbstractGame {
 			}
 			if (((Number) event.getAttributeChanges().get(key)).longValue() < 0) {
 				throw new GameFailureTerminationException(key
-						+ " is now negative.");
+						+ " is now negative.", event);
 			}
 		}
 		for (String key : this.gameData.successAttributeChecks) {
@@ -107,7 +107,7 @@ public class StandardGame extends AbstractGame {
 			}
 			if (((Number) event.getAttributeChanges().get(key)).longValue() > 0) {
 				throw new GameSuccessTerminationException(key
-						+ " is now positive.");
+						+ " is now positive.", event);
 			}
 		}
 	}

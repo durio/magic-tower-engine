@@ -3,6 +3,8 @@ package cn.edu.tsinghua.academic.c00740273.magictower.engine;
 @SuppressWarnings("serial")
 public class GameTerminationException extends Exception {
 
+	protected Event event;
+
 	public GameTerminationException() {
 		super();
 	}
@@ -22,6 +24,15 @@ public class GameTerminationException extends Exception {
 
 	public GameTerminationException(Throwable cause) {
 		super(cause);
+	}
+
+	public GameTerminationException(String message, Event event) {
+		super(message);
+		this.event = event;
+	}
+
+	public Event getEvent() {
+		return this.event;
 	}
 
 }
