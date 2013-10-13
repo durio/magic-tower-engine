@@ -14,6 +14,8 @@ public interface Game {
 
 	public Object getAttribute(String key);
 
+	public Object setAttribute(String key, Object value);
+
 	public Map<String, Object> getAttributes();
 
 	public Tile getTile(Coordinate coord);

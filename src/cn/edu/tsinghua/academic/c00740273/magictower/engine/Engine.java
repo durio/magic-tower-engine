@@ -289,6 +289,18 @@ public class Engine {
 	}
 
 	/**
+	 * Set a current attribute of the character.
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public Object setAttribute(String key, Object value) {
+		Object prev = this.game.getAttribute(key);
+		this.game.setAttribute(key, value);
+		return prev;
+	}
+
+	/**
 	 * Get the Tile at given coordinate.
 	 * 
 	 * @param coord

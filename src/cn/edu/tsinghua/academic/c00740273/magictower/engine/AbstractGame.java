@@ -38,6 +38,13 @@ public abstract class AbstractGame implements TileArrayGame {
 	}
 
 	@Override
+	public Object setAttribute(String key, Object value) {
+		Object prev = this.getGameData().getAttribute(key);
+		this.getGameData().setAttribute(key, value);
+		return prev;
+	}
+
+	@Override
 	public Map<String, Object> getAttributes() {
 		return this.getGameData().getAttributes();
 	}
