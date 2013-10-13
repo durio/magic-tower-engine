@@ -28,6 +28,15 @@ public abstract class AbstractGame implements TileArrayGame {
 		return this.getGameData().getAttribute(key);
 	}
 
+	public Object getAttribute(Event event, String key) {
+		Object attribute = event.getAttributeChanges().get(key);
+		if (attribute != null) {
+			return attribute;
+		} else {
+			return this.getGameData().getAttribute(key);
+		}
+	}
+
 	@Override
 	public Map<String, Object> getAttributes() {
 		return this.getGameData().getAttributes();
@@ -36,6 +45,15 @@ public abstract class AbstractGame implements TileArrayGame {
 	@Override
 	public Tile getTile(Coordinate coord) {
 		return this.getGameData().getTile(coord);
+	}
+
+	public Tile getTile(Event event, Coordinate coord) {
+		Tile tile = event.getTileChanges().get(coord);
+		if (tile != null) {
+			return tile;
+		} else {
+			return this.getGameData().getTile(coord);
+		}
 	}
 
 	@Override

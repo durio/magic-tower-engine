@@ -24,7 +24,7 @@ public class OneTimeMixin implements RegularTileMixin {
 	public boolean enter(StandardEvent event, Coordinate coord,
 			RegularTile tile, Coordinate sourceCoord, CharacterTile sourceTile,
 			Map<String, Object> args, StandardGame game) {
-		StandardTile newTile = (StandardTile) event.getTileChanges().get(coord);
+		StandardTile newTile = (StandardTile) game.getTile(event, coord);
 		if (newTile instanceof CharacterTile) {
 			((CharacterTile) newTile).tileAfterLeave = this.nextRegularTile;
 		} else {

@@ -42,27 +42,12 @@ public class FightMixin implements RegularTileMixin {
 		long opponentAttack = this.opponentInitialAttack;
 		long opponentDefense = this.opponentInitialDefense;
 		long opponentHealth = this.opponentInitialHealth;
-		Number selfAttackObj = (Number) event.getAttributeChanges().get(
-				this.attackAttributeName);
-		Number selfDefenseObj = (Number) event.getAttributeChanges().get(
-				this.defenseAttributeName);
-		Number selfHealthObj = (Number) event.getAttributeChanges().get(
-				this.healthAttributeName);
-		if (selfAttackObj == null) {
-			selfAttackObj = (Number) game
-					.getAttribute(this.attackAttributeName);
-		}
-		if (selfDefenseObj == null) {
-			selfDefenseObj = (Number) game
-					.getAttribute(this.defenseAttributeName);
-		}
-		if (selfHealthObj == null) {
-			selfHealthObj = (Number) game
-					.getAttribute(this.healthAttributeName);
-		}
-		long selfAttack = selfAttackObj.longValue();
-		long selfDefense = selfDefenseObj.longValue();
-		long selfHealth = selfHealthObj.longValue();
+		long selfAttack = ((Number) game.getAttribute(event,
+				this.attackAttributeName)).longValue();
+		long selfDefense = ((Number) game.getAttribute(event,
+				this.defenseAttributeName)).longValue();
+		long selfHealth = ((Number) game.getAttribute(event,
+				this.healthAttributeName)).longValue();
 		Map<String, Long> fightDetails = new HashMap<String, Long>();
 		fightDetails.put("opponent-attack-before", opponentAttack);
 		fightDetails.put("opponent-defense-before", opponentDefense);

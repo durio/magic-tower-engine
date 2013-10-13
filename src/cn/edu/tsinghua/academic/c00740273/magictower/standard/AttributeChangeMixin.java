@@ -37,10 +37,7 @@ public class AttributeChangeMixin implements RegularTileMixin {
 	public boolean enter(StandardEvent event, Coordinate coord,
 			RegularTile tile, Coordinate sourceCoord, CharacterTile sourceTile,
 			Map<String, Object> args, StandardGame game) {
-		Object oldValue = event.getAttributeChanges().get(this.attributeName);
-		if (oldValue == null) {
-			oldValue = game.getAttribute(this.attributeName);
-		}
+		Object oldValue = game.getAttribute(event, this.attributeName);
 		if (this.operator.equals("+")) {
 			event.setAttributeChange(this.attributeName,
 					((Number) oldValue).longValue() + this.longOperand);

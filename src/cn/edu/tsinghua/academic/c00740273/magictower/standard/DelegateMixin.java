@@ -26,7 +26,8 @@ public class DelegateMixin implements RegularTileMixin {
 	public boolean enter(StandardEvent event, Coordinate coord,
 			RegularTile tile, Coordinate sourceCoord, CharacterTile sourceTile,
 			Map<String, Object> args, StandardGame game) {
-		StandardTile targetTile = (StandardTile) game.getTile(this.targetCoord);
+		StandardTile targetTile = (StandardTile) game.getTile(event,
+				this.targetCoord);
 		if (targetTile instanceof RegularTile) {
 			RegularTile targetRegularTile = (RegularTile) targetTile;
 			if (targetRegularTile.mixin != null) {

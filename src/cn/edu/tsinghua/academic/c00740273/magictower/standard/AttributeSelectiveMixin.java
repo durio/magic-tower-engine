@@ -36,11 +36,7 @@ public class AttributeSelectiveMixin implements RegularTileMixin {
 	public boolean enter(StandardEvent event, Coordinate coord,
 			RegularTile tile, Coordinate sourceCoord, CharacterTile sourceTile,
 			Map<String, Object> args, StandardGame game) {
-		Number valueObj = (Number) event.getAttributeChanges().get(
-				this.attributeName);
-		if (valueObj == null) {
-			valueObj = (Number) game.getAttribute(this.attributeName);
-		}
+		Number valueObj = (Number) game.getAttribute(event, this.attributeName);
 		long value = valueObj.longValue();
 		String[] matchingOperators;
 		if (value < this.referenceValue) {
