@@ -16,8 +16,8 @@ public class OneTimeMixin implements RegularTileMixin {
 	@Override
 	public void initialize(JSONObject dataMixinValue) throws JSONException,
 			DataFormatException {
-		this.nextRegularTile = new RegularTile();
-		this.nextRegularTile.initialize(dataMixinValue.getJSONObject("next"));
+		JSONObject dataNextValue = dataMixinValue.getJSONObject("next");
+		this.nextRegularTile = (RegularTile) ClassUtils.makeTile(dataNextValue);
 	}
 
 	@Override
