@@ -65,7 +65,7 @@ public class FightMixin implements RegularTileMixin {
 		}
 		while (opponentHealth > 0) {
 			opponentHealth -= selfAttack - opponentDefense;
-			selfHealth -= opponentAttack - selfDefense;
+			selfHealth -= Math.max(0L, opponentAttack - selfDefense);
 		}
 		event.setAttributeChange(this.attackAttributeName, selfAttack);
 		event.setAttributeChange(this.defenseAttributeName, selfDefense);
