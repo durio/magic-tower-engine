@@ -55,4 +55,8 @@ public class CharacterTile implements StandardTile {
 		return this.tileAfterLeave;
 	}
 
+	public void setTileAfterLeave(RegularTile tileAfterLeave) {
+		this.tileAfterLeave = tileAfterLeave;
+	}
+
 }

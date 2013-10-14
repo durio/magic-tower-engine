@@ -54,4 +54,9 @@ public class RegularTile implements StandardTile {
 		}
 		return event;
 	}
+
+	public RegularTileMixin getMixin() {
+		return this.mixin;
+	}
+
 }
