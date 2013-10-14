@@ -11,7 +11,7 @@ import cn.edu.tsinghua.academic.c00740273.magictower.standard.RegularTileMixin;
 import cn.edu.tsinghua.academic.c00740273.magictower.standard.StandardEvent;
 import cn.edu.tsinghua.academic.c00740273.magictower.standard.StandardGame;
 
-public class AttributeChangeMixin implements RegularTileMixin {
+public class AttributeChange implements RegularTileMixin {
 
 	private static final long serialVersionUID = 1L;
 

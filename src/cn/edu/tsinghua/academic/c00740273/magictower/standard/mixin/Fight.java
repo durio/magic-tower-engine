@@ -14,7 +14,7 @@ import cn.edu.tsinghua.academic.c00740273.magictower.standard.RegularTileMixin;
 import cn.edu.tsinghua.academic.c00740273.magictower.standard.StandardEvent;
 import cn.edu.tsinghua.academic.c00740273.magictower.standard.StandardGame;
 
-public class FightMixin implements RegularTileMixin {
+public class Fight implements RegularTileMixin {
 
 	private static final long serialVersionUID = 1L;
 
