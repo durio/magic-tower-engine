@@ -1,7 +1,5 @@
 package cn.edu.tsinghua.academic.c00740273.magictower.standard;
 
-import java.util.Map;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,10 +26,9 @@ public class BatchMixin implements RegularTileMixin {
 	@Override
 	public boolean enter(StandardEvent event, Coordinate coord,
 			RegularTile tile, Coordinate sourceCoord, CharacterTile sourceTile,
-			Map<String, Object> args, StandardGame game) {
+			StandardGame game) {
 		for (RegularTileMixin mixin : this.mixins) {
-			if (!mixin.enter(event, coord, tile, sourceCoord, sourceTile, args,
-					game)) {
+			if (!mixin.enter(event, coord, tile, sourceCoord, sourceTile, game)) {
 				// Let's have it affect only one level of BatchMixin.
 				return true;
 			}

@@ -1,7 +1,5 @@
 package cn.edu.tsinghua.academic.c00740273.magictower.standard;
 
-import java.util.Map;
-
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.AbstractGame;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.Coordinate;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.Event;
@@ -72,8 +70,7 @@ public class StandardGame extends AbstractGame {
 	}
 
 	@Override
-	public StandardEvent attemptMoveTo(Coordinate coord,
-			Map<String, Object> args) {
+	public StandardEvent attemptMoveTo(Coordinate coord) {
 		Coordinate sourceCoord = this.getCurrentCoordinate();
 		// Out of bound. Keep not moved.
 		if (coord.compareCoordinate(Coordinate.ZERO, -1) < 0
@@ -84,7 +81,7 @@ public class StandardGame extends AbstractGame {
 		StandardTile sourceTile = (StandardTile) this.gameData
 				.getTile(sourceCoord);
 		StandardEvent event = tile.enter(coord, sourceCoord,
-				(CharacterTile) sourceTile, args, this);
+				(CharacterTile) sourceTile, this);
 		return event;
 	}
 

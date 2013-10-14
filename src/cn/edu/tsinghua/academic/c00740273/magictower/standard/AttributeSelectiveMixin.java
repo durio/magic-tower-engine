@@ -35,7 +35,7 @@ public class AttributeSelectiveMixin implements RegularTileMixin {
 	@Override
 	public boolean enter(StandardEvent event, Coordinate coord,
 			RegularTile tile, Coordinate sourceCoord, CharacterTile sourceTile,
-			Map<String, Object> args, StandardGame game) {
+			StandardGame game) {
 		Number valueObj = (Number) game.getAttribute(event, this.attributeName);
 		long value = valueObj.longValue();
 		String[] matchingOperators;
@@ -49,8 +49,7 @@ public class AttributeSelectiveMixin implements RegularTileMixin {
 		for (String operator : matchingOperators) {
 			RegularTileMixin mixin = this.mixins.get(operator);
 			if (mixin != null) {
-				mixin.enter(event, coord, tile, sourceCoord, sourceTile, args,
-						game);
+				mixin.enter(event, coord, tile, sourceCoord, sourceTile, game);
 			}
 		}
 		return true;

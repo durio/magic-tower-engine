@@ -29,10 +29,9 @@ public interface Game {
 	 * coordinate.
 	 * 
 	 * @param coord
-	 * @param args
 	 * @return
 	 */
-	public Event attemptMoveTo(Coordinate coord, Map<String, Object> args);
+	public Event attemptMoveTo(Coordinate coord);
 
 	/**
 	 * Apply the event given in attemptMoveTo().

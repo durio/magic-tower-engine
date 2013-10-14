@@ -46,8 +46,7 @@ public class CharacterTile implements StandardTile {
 
 	@Override
 	public StandardEvent enter(Coordinate coord, Coordinate sourceCoord,
-			CharacterTile sourceTile, Map<String, Object> args,
-			StandardGame game) {
+			CharacterTile sourceTile, StandardGame game) {
 		// This shouldn't happen in real game play.
 		return new StandardEvent(sourceCoord);
 	}

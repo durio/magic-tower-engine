@@ -47,12 +47,10 @@ public class RegularTile implements StandardTile {
 
 	@Override
 	public StandardEvent enter(Coordinate coord, Coordinate sourceCoord,
-			CharacterTile sourceTile, Map<String, Object> args,
-			StandardGame game) {
+			CharacterTile sourceTile, StandardGame game) {
 		StandardEvent event = new StandardEvent(sourceCoord);
 		if (this.mixin != null) {
-			this.mixin.enter(event, coord, this, sourceCoord, sourceTile, args,
-					game);
+			this.mixin.enter(event, coord, this, sourceCoord, sourceTile, game);
 		}
 		return event;
 	}

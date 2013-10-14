@@ -10,6 +10,5 @@ public interface StandardTile extends Tile, Initializable {
 	public Map<String, Object> getRenderingData();
 
 	public StandardEvent enter(Coordinate coord, Coordinate sourceCoord,
-			CharacterTile sourceTile, Map<String, Object> args,
-			StandardGame game);
+			CharacterTile sourceTile, StandardGame game);
 }

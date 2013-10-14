@@ -1,7 +1,5 @@
 package cn.edu.tsinghua.academic.c00740273.magictower.standard;
 
-import java.util.Map;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,7 +19,7 @@ public class MessageMixin implements RegularTileMixin {
 	@Override
 	public boolean enter(StandardEvent event, Coordinate coord,
 			RegularTile tile, Coordinate sourceCoord, CharacterTile sourceTile,
-			Map<String, Object> args, StandardGame game) {
+			StandardGame game) {
 		// TODO Auto-generated method stub
 		return true;
 	}

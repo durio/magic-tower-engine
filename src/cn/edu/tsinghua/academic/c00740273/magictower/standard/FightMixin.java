@@ -38,7 +38,7 @@ public class FightMixin implements RegularTileMixin {
 	@Override
 	public boolean enter(StandardEvent event, Coordinate coord,
 			RegularTile tile, Coordinate sourceCoord, CharacterTile sourceTile,
-			Map<String, Object> args, StandardGame game) {
+			StandardGame game) {
 		long opponentAttack = this.opponentInitialAttack;
 		long opponentDefense = this.opponentInitialDefense;
 		long opponentHealth = this.opponentInitialHealth;

@@ -190,9 +190,8 @@ public class Engine {
 	}
 
 	@SuppressWarnings("incomplete-switch")
-	protected Event moveEvent(Coordinate coord, Map<String, Object> args)
-			throws GameTerminationException {
-		Event event = this.game.attemptMoveTo(coord, args);
+	protected Event moveEvent(Coordinate coord) throws GameTerminationException {
+		Event event = this.game.attemptMoveTo(coord);
 		try {
 			this.game.simulateEvent(event);
 		} catch (GameSuccessTerminationException e) {
@@ -221,10 +220,9 @@ public class Engine {
 	 * @return The event, or null if rejected due to termination policy.
 	 * @throws GameTerminationException
 	 */
-	public Event moveTo(Coordinate coord, Map<String, Object> args)
-			throws GameTerminationException {
+	public Event moveTo(Coordinate coord) throws GameTerminationException {
 		this.checkGameLoad();
-		Event event = this.moveEvent(coord, args);
+		Event event = this.moveEvent(coord);
 		if (event != null) {
 			this.game.applyEvent(event);
 		}
@@ -239,10 +237,10 @@ public class Engine {
 	 * @return
 	 * @throws GameTerminationException
 	 */
-	public Event simulateMoveTo(Coordinate coord, Map<String, Object> args)
+	public Event simulateMoveTo(Coordinate coord)
 			throws GameTerminationException {
 		this.checkGameLoad();
-		return this.moveEvent(coord, args);
+		return this.moveEvent(coord);
 	}
 
 	/**
@@ -254,9 +252,9 @@ public class Engine {
 	 * @param args
 	 * @return
 	 */
-	public Event attemptMoveTo(Coordinate coord, Map<String, Object> args) {
+	public Event attemptMoveTo(Coordinate coord) {
 		this.checkGameLoad();
-		return this.game.attemptMoveTo(coord, args);
+		return this.game.attemptMoveTo(coord);
 	}
 
 	/**
