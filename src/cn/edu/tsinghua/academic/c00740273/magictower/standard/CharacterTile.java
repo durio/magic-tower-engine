@@ -15,6 +15,7 @@ public class CharacterTile implements StandardTile {
 
 	private static final long serialVersionUID = 1L;
 
+	protected FirstEventMixin mixin;
 	protected RegularTile tileAfterLeave;
 	protected Map<String, Object> renderingData;
 
@@ -40,8 +41,21 @@ public class CharacterTile implements StandardTile {
 	@Override
 	public void initialize(JSONObject dataTileValue) throws JSONException,
 			DataFormatException {
+		JSONObject dataMixinValue = dataTileValue.optJSONObject("mixin");
+		if (dataMixinValue != null) {
+			this.mixin = ClassUtils.makeFirstEventMixin(dataMixinValue);
+		}
 		JSONObject dataBaseValue = dataTileValue.getJSONObject("base");
 		this.tileAfterLeave = (RegularTile) ClassUtils.makeTile(dataBaseValue);
+	}
+
+	public StandardEvent firstEvent(Coordinate coord) {
+		// This happens in game initialization only in real game play.
+		StandardEvent event = new StandardEvent(coord);
+		if (this.mixin != null) {
+			this.mixin.firstEvent(event, coord, this);
+		}
+		return event;
 	}
 
 	@Override

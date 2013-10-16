@@ -15,6 +15,11 @@ public class ClassUtils {
 		return makeInitializableObject(RegularTileMixin.class, dataMixinValue);
 	}
 
+	public static FirstEventMixin makeFirstEventMixin(JSONObject dataMixinValue)
+			throws JSONException, DataFormatException {
+		return makeInitializableObject(FirstEventMixin.class, dataMixinValue);
+	}
+
 	public static StandardRenderer makeRenderer(JSONObject dataRendererValue)
 			throws JSONException, DataFormatException {
 		return makeInitializableObject(StandardRenderer.class,

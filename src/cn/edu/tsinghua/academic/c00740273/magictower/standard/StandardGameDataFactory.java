@@ -21,6 +21,7 @@ public class StandardGameDataFactory {
 	protected StandardEvent firstEvent;
 	protected GameRenderer renderer;
 	protected Coordinate startCoord;
+	protected CharacterTile startTile;
 
 	public StandardGameDataFactory(String data) {
 		this.data = data;
@@ -52,7 +53,7 @@ public class StandardGameDataFactory {
 		this.gameData.failureAttributeChecks = failureAttributeChecks;
 		this.gameData.successAttributeChecks = successAttributeChecks;
 		this.gameData.createdFrom = this.data;
-		this.firstEvent = new StandardEvent(this.startCoord);
+		this.firstEvent = this.startTile.firstEvent(this.startCoord);
 		this.renderer = renderer;
 	}
 
@@ -78,6 +79,7 @@ public class StandardGameDataFactory {
 					tiles[z][x][y] = this.getTile(tileId, dataTileValues);
 					if (tiles[z][x][y] instanceof CharacterTile) {
 						this.startCoord = new Coordinate(z, x, y);
+						this.startTile = (CharacterTile) tiles[z][x][y];
 					}
 				}
 			}
