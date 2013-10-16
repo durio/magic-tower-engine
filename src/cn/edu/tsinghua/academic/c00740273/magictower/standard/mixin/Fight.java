@@ -69,9 +69,10 @@ public class Fight implements RegularTileMixin {
 		} else {
 			fightDetails.put("quick-death", 0L);
 		}
+		opponentHealth -= selfAttack - opponentDefense;
 		while (opponentHealth > 0) {
-			opponentHealth -= selfAttack - opponentDefense;
 			selfHealth -= Math.max(0L, opponentAttack - selfDefense);
+			opponentHealth -= selfAttack - opponentDefense;
 		}
 		event.setAttributeChange(this.attackAttributeName, selfAttack);
 		event.setAttributeChange(this.defenseAttributeName, selfDefense);
