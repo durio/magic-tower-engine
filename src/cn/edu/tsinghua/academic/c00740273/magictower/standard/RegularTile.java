@@ -1,7 +1,6 @@
 package cn.edu.tsinghua.academic.c00740273.magictower.standard;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.json.JSONException;
@@ -19,6 +18,7 @@ public class RegularTile implements StandardTile {
 	protected RegularTileMixin mixin;
 	protected Map<String, Object> renderingData;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(JSONObject dataTileValue) throws JSONException,
 			DataFormatException {
@@ -27,15 +27,11 @@ public class RegularTile implements StandardTile {
 			this.mixin = ClassUtils.makeMixin(dataMixinValue);
 		}
 		JSONObject dataRendering = dataTileValue.optJSONObject("rendering");
-		this.renderingData = new HashMap<String, Object>();
 		if (dataRendering != null) {
-			@SuppressWarnings("unchecked")
-			Iterator<String> renderingKeyIterator = dataRendering.keys();
-			while (renderingKeyIterator.hasNext()) {
-				String renderingName = renderingKeyIterator.next();
-				Object renderingValue = dataRendering.get(renderingName);
-				this.renderingData.put(renderingName, renderingValue);
-			}
+			this.renderingData = (Map<String, Object>) JSONUtils
+					.makeObjectSerializable(dataRendering);
+		} else {
+			this.renderingData = new HashMap<String, Object>();
 		}
 		this.renderingData.put("character", false);
 	}

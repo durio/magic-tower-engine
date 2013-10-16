@@ -2,7 +2,6 @@ package cn.edu.tsinghua.academic.c00740273.magictower.standard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -87,18 +86,12 @@ public class StandardGameDataFactory {
 		return tiles;
 	}
 
+	@SuppressWarnings("unchecked")
 	protected Map<String, Object> makeAttributes(JSONObject dataRoot)
 			throws JSONException, DataFormatException {
-		Map<String, Object> attributes = new HashMap<String, Object>();
 		JSONObject dataAttributes = dataRoot.getJSONObject("attributes");
-		@SuppressWarnings("unchecked")
-		Iterator<String> attributeKeyIterator = dataAttributes.keys();
-		while (attributeKeyIterator.hasNext()) {
-			String attributeName = attributeKeyIterator.next();
-			Object attributeValue = dataAttributes.get(attributeName);
-			attributes.put(attributeName, attributeValue);
-		}
-		return attributes;
+		return (Map<String, Object>) JSONUtils
+				.makeObjectSerializable(dataAttributes);
 	}
 
 	protected List<String> makeStringList(JSONObject dataRoot, String location)
