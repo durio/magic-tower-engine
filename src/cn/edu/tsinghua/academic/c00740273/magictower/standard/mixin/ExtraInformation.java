@@ -7,6 +7,7 @@ import cn.edu.tsinghua.academic.c00740273.magictower.engine.Coordinate;
 import cn.edu.tsinghua.academic.c00740273.magictower.standard.CharacterTile;
 import cn.edu.tsinghua.academic.c00740273.magictower.standard.DataFormatException;
 import cn.edu.tsinghua.academic.c00740273.magictower.standard.FirstEventMixin;
+import cn.edu.tsinghua.academic.c00740273.magictower.standard.JSONUtils;
 import cn.edu.tsinghua.academic.c00740273.magictower.standard.RegularTile;
 import cn.edu.tsinghua.academic.c00740273.magictower.standard.RegularTileMixin;
 import cn.edu.tsinghua.academic.c00740273.magictower.standard.StandardEvent;
@@ -32,7 +33,8 @@ public class ExtraInformation implements RegularTileMixin, FirstEventMixin {
 		} else {
 			throw new DataFormatException("Invalid action: " + action + ".");
 		}
-		this.value = dataMixinValue.get("value");
+		this.value = JSONUtils.makeObjectSerializable(dataMixinValue
+				.get("value"));
 	}
 
 	@Override
