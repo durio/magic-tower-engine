@@ -11,27 +11,6 @@ import java.util.Map;
 
 /**
  * This is the main entry point of a game application run.
- * 
- * Usage example (exact design of renderer is a TODO):
- * 
- * <pre>
- * Engine engine = new Engine();
- * Game game = new StandardGame(data);
- * GameRenderer renderer = game.getRenderer();
- * 
- * Event event = engine.loadGame(game);
- * Map&lt;String, Object&gt; args = null;
- * args = renderer.renderEvent(event);
- * 
- * while (true) {
- * 	Coordinate coordinate = engine.getCurrentCoordinate();
- * 	renderer.renderAttributes(engine.getAttributes());
- * 	renderer.renderLayerTiles(engine.getLayerTiles(coordinate.getZ()));
- * 	Coordinate nextCoord = getUserActionCoord(coordinate);
- * 	event = engine.moveTo(nextCoord, args);
- * 	args = renderer.renderEvent(event);
- * }
- * </pre>
  */
 public class Engine {
 
@@ -216,7 +195,6 @@ public class Engine {
 	 * Move the character to the given coordinate.
 	 * 
 	 * @param coord
-	 * @param args
 	 * @return The event, or null if rejected due to termination policy.
 	 * @throws GameTerminationException
 	 */
@@ -233,8 +211,7 @@ public class Engine {
 	 * See what happens if the character moves to the given coordinate.
 	 * 
 	 * @param coord
-	 * @param args
-	 * @return
+	 * @return The event, or null if rejected due to termination policy.
 	 * @throws GameTerminationException
 	 */
 	public Event simulateMoveTo(Coordinate coord)
@@ -249,8 +226,7 @@ public class Engine {
 	 * Does not check game termination.
 	 * 
 	 * @param coord
-	 * @param args
-	 * @return
+	 * @return The event
 	 */
 	public Event attemptMoveTo(Coordinate coord) {
 		this.checkGameLoad();
