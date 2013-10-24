@@ -30,7 +30,8 @@ public final class Coordinate implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return this.z ^ this.x ^ this.y;
+		return ((this.z << 20) | (this.z >>> 20))
+				^ ((this.x << 10) | (this.x >>> 10)) ^ this.y;
 	}
 
 	@Override
