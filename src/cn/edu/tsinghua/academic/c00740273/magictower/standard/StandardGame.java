@@ -5,7 +5,6 @@ import cn.edu.tsinghua.academic.c00740273.magictower.engine.Coordinate;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.Event;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameData;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameFailureTerminationException;
-import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameRenderer;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameSuccessTerminationException;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameTerminationException;
 
@@ -50,8 +49,7 @@ public class StandardGame extends AbstractGame {
 		return this.maximumCoordinate;
 	}
 
-	@Override
-	public GameRenderer getRenderer() {
+	public StandardRenderer getRenderer() {
 		if (this.gameDataFactory == null && this.gameData != null
 				&& this.getGameData().createdFrom != null) {
 			this.gameDataFactory = new StandardGameDataFactory(

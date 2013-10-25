@@ -22,8 +22,6 @@ public interface Game {
 
 	public Coordinate getMaximumCoordinate();
 
-	public GameRenderer getRenderer();
-
 	/**
 	 * Calculate the event happening if the character moves to the given
 	 * coordinate.

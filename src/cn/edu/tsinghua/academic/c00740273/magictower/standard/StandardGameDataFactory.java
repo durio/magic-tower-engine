@@ -10,7 +10,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.Coordinate;
-import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameRenderer;
 
 public class StandardGameDataFactory {
 
@@ -18,7 +17,7 @@ public class StandardGameDataFactory {
 	protected Map<String, StandardTile> tileValues;
 	protected StandardGameData gameData;
 	protected StandardEvent firstEvent;
-	protected GameRenderer renderer;
+	protected StandardRenderer renderer;
 	protected Coordinate startCoord;
 	protected CharacterTile startTile;
 
@@ -30,7 +29,7 @@ public class StandardGameDataFactory {
 	public void make() throws DataFormatException {
 		Map<String, Object> attributes;
 		StandardTile[][][] tiles;
-		GameRenderer renderer;
+		StandardRenderer renderer;
 		List<String> failureAttributeChecks;
 		List<String> successAttributeChecks;
 		try {
@@ -129,7 +128,7 @@ public class StandardGameDataFactory {
 		return this.gameData;
 	}
 
-	public GameRenderer makeRenderer() throws DataFormatException {
+	public StandardRenderer makeRenderer() throws DataFormatException {
 		if (this.renderer == null) {
 			this.make();
 		}
