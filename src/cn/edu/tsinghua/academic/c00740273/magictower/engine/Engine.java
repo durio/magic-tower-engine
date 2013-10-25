@@ -310,6 +310,11 @@ public class Engine {
 		}
 	}
 
+	/**
+	 * Get the maximum coordinate that exists.
+	 * 
+	 * @return
+	 */
 	public Coordinate getMaximumCoordinate() {
 		this.checkGameLoad();
 		return this.game.getMaximumCoordinate();
