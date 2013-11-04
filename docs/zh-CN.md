@@ -119,7 +119,7 @@ JSON对象。*XXX*为StandardTile、StandardRenderer、FirstEventMixin或Regular
 
 在只接受一个mixin的地方（大部分）执行多个mixin。需要：
 
-* mixins：JSON数组，各值为一个*RegularTileMixin对象*
+* mixins：JSON数组，各值为一个*FirstEventMixin对象*或*RegularTileMixin对象*
 
 ### RegularTileMixin - cn.edu.tsinghua.academic.c00740273.magictower.standard.mixin.Delegate ###
 
