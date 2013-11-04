@@ -7,11 +7,6 @@ public class GameSuccessTerminationException extends GameTerminationException {
 		super();
 	}
 
-	public GameSuccessTerminationException(String message, Throwable cause,
-			boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
-
 	public GameSuccessTerminationException(String message, Throwable cause) {
 		super(message, cause);
 	}

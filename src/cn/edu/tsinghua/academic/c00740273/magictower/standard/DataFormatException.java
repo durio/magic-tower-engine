@@ -20,9 +20,4 @@ public class DataFormatException extends DataException {
 		super(message, cause);
 	}
 
-	public DataFormatException(String message, Throwable cause,
-			boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
-
 }
