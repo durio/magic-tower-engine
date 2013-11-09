@@ -3,10 +3,12 @@ package cn.edu.tsinghua.academic.c00740273.magictower.engine;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.Map;
 
 /**
@@ -72,6 +74,33 @@ public class Engine {
 	}
 
 	/**
+	 * Load game from previously saved data in an input stream.
+	 * 
+	 * This clears any existing execution information.
+	 * 
+	 * @param is
+	 * @throws IOException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 */
+	public void unserializeGame(InputStream is) throws IOException,
+			InstantiationException, IllegalAccessException,
+			ClassNotFoundException {
+		ObjectInput in = null;
+		try {
+			in = new ObjectInputStream(is);
+			Game game = (Game) Class.forName((String) in.readObject())
+					.newInstance();
+			GameData gameData = (GameData) in.readObject();
+			game.setGameData(gameData);
+			this.setGame(game);
+		} finally {
+			in.close();
+		}
+	}
+
+	/**
 	 * Load game from previously saved data.
 	 * 
 	 * This clears any existing execution information.
@@ -86,17 +115,27 @@ public class Engine {
 			InstantiationException, IllegalAccessException,
 			ClassNotFoundException {
 		ByteArrayInputStream bis = new ByteArrayInputStream(serialization);
-		ObjectInput in = null;
 		try {
-			in = new ObjectInputStream(bis);
-			Game game = (Game) Class.forName((String) in.readObject())
-					.newInstance();
-			GameData gameData = (GameData) in.readObject();
-			game.setGameData(gameData);
-			this.setGame(game);
+			this.unserializeGame(bis);
 		} finally {
 			bis.close();
-			in.close();
+		}
+	}
+
+	/**
+	 * Save data for the current game to given output stream for future load.
+	 * 
+	 * @param os
+	 * @throws IOException
+	 */
+	public void serializeGame(OutputStream os) throws IOException {
+		ObjectOutput out = null;
+		try {
+			out = new ObjectOutputStream(os);
+			out.writeObject(this.game.getClass().getName());
+			out.writeObject(this.game.getGameData());
+		} finally {
+			out.close();
 		}
 	}
 
@@ -108,14 +147,10 @@ public class Engine {
 	 */
 	public byte[] serializeGame() throws IOException {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ObjectOutput out = null;
 		try {
-			out = new ObjectOutputStream(bos);
-			out.writeObject(this.game.getClass().getName());
-			out.writeObject(this.game.getGameData());
+			this.serializeGame(bos);
 			return bos.toByteArray();
 		} finally {
-			out.close();
 			bos.close();
 		}
 	}
