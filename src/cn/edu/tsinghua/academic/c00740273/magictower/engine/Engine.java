@@ -87,17 +87,12 @@ public class Engine {
 	public void unserializeGame(InputStream is) throws IOException,
 			InstantiationException, IllegalAccessException,
 			ClassNotFoundException {
-		ObjectInput in = null;
-		try {
-			in = new ObjectInputStream(is);
-			Game game = (Game) Class.forName((String) in.readObject())
-					.newInstance();
-			GameData gameData = (GameData) in.readObject();
-			game.setGameData(gameData);
-			this.setGame(game);
-		} finally {
-			in.close();
-		}
+		ObjectInput in = new ObjectInputStream(is);
+		Game game = (Game) Class.forName((String) in.readObject())
+				.newInstance();
+		GameData gameData = (GameData) in.readObject();
+		game.setGameData(gameData);
+		this.setGame(game);
 	}
 
 	/**
@@ -130,13 +125,10 @@ public class Engine {
 	 */
 	public void serializeGame(OutputStream os) throws IOException {
 		ObjectOutput out = null;
-		try {
-			out = new ObjectOutputStream(os);
-			out.writeObject(this.game.getClass().getName());
-			out.writeObject(this.game.getGameData());
-		} finally {
-			out.close();
-		}
+		out = new ObjectOutputStream(os);
+		out.writeObject(this.game.getClass().getName());
+		out.writeObject(this.game.getGameData());
+		out.flush();
 	}
 
 	/**
