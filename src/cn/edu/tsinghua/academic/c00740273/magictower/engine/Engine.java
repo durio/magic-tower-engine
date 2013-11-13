@@ -122,8 +122,13 @@ public class Engine {
 	 * 
 	 * @param os
 	 * @throws IOException
+	 * @throws IllegalStateException
+	 *             When no game was loaded for this engine.
 	 */
 	public void serializeGame(OutputStream os) throws IOException {
+		if (this.game == null) {
+			throw new IllegalStateException("No game loaded yet.");
+		}
 		ObjectOutput out = null;
 		out = new ObjectOutputStream(os);
 		out.writeObject(this.game.getClass().getName());
