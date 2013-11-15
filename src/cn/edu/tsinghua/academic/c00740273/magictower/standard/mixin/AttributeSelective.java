@@ -45,14 +45,7 @@ public class AttributeSelective implements RegularTileMixin {
 			StandardGame game) {
 		Number valueObj = (Number) game.getAttribute(event, this.attributeName);
 		long value = valueObj.longValue();
-		String[] matchingOperators;
-		if (value < this.referenceValue) {
-			matchingOperators = new String[] { "!=", "<", "<=" };
-		} else if (value > this.referenceValue) {
-			matchingOperators = new String[] { "!=", ">", ">=" };
-		} else {
-			matchingOperators = new String[] { "==", "<=", ">=" };
-		}
+		String[] matchingOperators = this.matchedOperators(value);
 		for (String operator : matchingOperators) {
 			RegularTileMixin mixin = this.mixins.get(operator);
 			if (mixin != null) {
@@ -60,5 +53,15 @@ public class AttributeSelective implements RegularTileMixin {
 			}
 		}
 		return true;
+	}
+
+	public String[] matchedOperators(long value) {
+		if (value < this.referenceValue) {
+			return new String[] { "!=", "<", "<=" };
+		} else if (value > this.referenceValue) {
+			return new String[] { "!=", ">", ">=" };
+		} else {
+			return new String[] { "==", "<=", ">=" };
+		}
 	}
 }
