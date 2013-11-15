@@ -1,6 +1,8 @@
 package cn.edu.tsinghua.academic.c00740273.magictower.standard.mixin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONException;
@@ -26,6 +28,103 @@ public class Fight implements RegularTileMixin {
 	protected long opponentInitialAttack;
 	protected long opponentInitialDefense;
 	protected long opponentInitialHealth;
+
+	public class Attributes {
+
+		protected long opponentAttack;
+		protected long opponentDefense;
+		protected long opponentHealth;
+
+		protected long selfAttack;
+		protected long selfDefense;
+		protected long selfHealth;
+
+		/**
+		 * @param opponentAttack
+		 * @param opponentDefense
+		 * @param opponentHealth
+		 * @param selfAttack
+		 * @param selfDefense
+		 * @param selfHealth
+		 */
+		private Attributes(long opponentAttack, long opponentDefense,
+				long opponentHealth, long selfAttack, long selfDefense,
+				long selfHealth) {
+			this.opponentAttack = opponentAttack;
+			this.opponentDefense = opponentDefense;
+			this.opponentHealth = opponentHealth;
+			this.selfAttack = selfAttack;
+			this.selfDefense = selfDefense;
+			this.selfHealth = selfHealth;
+		}
+
+		/**
+		 * @return the opponentAttack
+		 */
+		public long getOpponentAttack() {
+			return this.opponentAttack;
+		}
+
+		/**
+		 * @return the opponentDefense
+		 */
+		public long getOpponentDefense() {
+			return this.opponentDefense;
+		}
+
+		/**
+		 * @return the opponentHealth
+		 */
+		public long getOpponentHealth() {
+			return this.opponentHealth;
+		}
+
+		/**
+		 * @return the selfAttack
+		 */
+		public long getSelfAttack() {
+			return this.selfAttack;
+		}
+
+		/**
+		 * @return the selfDefense
+		 */
+		public long getSelfDefense() {
+			return this.selfDefense;
+		}
+
+		/**
+		 * @return the selfHealth
+		 */
+		public long getSelfHealth() {
+			return this.selfHealth;
+		}
+
+		public void extractTo(Map<String, Long> fightDetails, String suffix) {
+			fightDetails.put("opponent-attack-" + suffix, this.opponentAttack);
+			fightDetails
+					.put("opponent-defense-" + suffix, this.opponentDefense);
+			fightDetails.put("opponent-health-" + suffix, this.opponentHealth);
+			fightDetails.put("self-attack-" + suffix, this.selfAttack);
+			fightDetails.put("self-defense-" + suffix, this.selfDefense);
+			fightDetails.put("self-health-" + suffix, this.selfHealth);
+		}
+
+		public Attributes nextAttributes(boolean selfAttacking) {
+			if (selfAttacking) {
+				return new Attributes(this.opponentAttack,
+						this.opponentDefense, this.opponentHealth
+								- (this.selfAttack - this.opponentDefense),
+						this.selfAttack, this.selfDefense, this.selfHealth);
+			} else {
+				return new Attributes(this.opponentAttack,
+						this.opponentDefense, this.opponentHealth,
+						this.selfAttack, this.selfDefense, this.selfHealth
+								- Math.max(0L, this.opponentAttack
+										- this.selfDefense));
+			}
+		}
+	}
 
 	@Override
 	public void initialize(JSONObject dataMixinValue) throws JSONException,
@@ -54,36 +153,33 @@ public class Fight implements RegularTileMixin {
 				this.defenseAttributeName)).longValue();
 		long selfHealth = ((Number) game.getAttribute(event,
 				this.healthAttributeName)).longValue();
+		Attributes attrs = this.new Attributes(opponentAttack, opponentDefense,
+				opponentHealth, selfAttack, selfDefense, selfHealth);
 		Map<String, Long> fightDetails = new HashMap<String, Long>();
-		fightDetails.put("opponent-attack-before", opponentAttack);
-		fightDetails.put("opponent-defense-before", opponentDefense);
-		fightDetails.put("opponent-health-before", opponentHealth);
-		fightDetails.put("self-attack-before", selfAttack);
-		fightDetails.put("self-defense-before", selfDefense);
-		fightDetails.put("self-health-before", selfHealth);
+		attrs.extractTo(fightDetails, "before");
 		if (selfAttack <= opponentDefense) {
 			fightDetails.put("quick-death", -1L);
 			event.setAttributeChange(this.deathAttributeName, -1L);
 			event.addExtraInformation("fight-details", fightDetails);
+			event.addExtraInformation("fight-logs", null);
 			return true;
 		} else {
 			fightDetails.put("quick-death", 0L);
 		}
-		opponentHealth -= selfAttack - opponentDefense;
-		while (opponentHealth > 0) {
-			selfHealth -= Math.max(0L, opponentAttack - selfDefense);
-			opponentHealth -= selfAttack - opponentDefense;
+		List<Attributes> attributeLog = new ArrayList<Attributes>();
+		attributeLog.add(attrs);
+		boolean selfAttacking = true;
+		while (attrs.opponentHealth > 0 && attrs.selfHealth > 0) {
+			attrs = attrs.nextAttributes(selfAttacking);
+			attributeLog.add(attrs);
+			selfAttacking = !selfAttacking;
 		}
-		event.setAttributeChange(this.attackAttributeName, selfAttack);
-		event.setAttributeChange(this.defenseAttributeName, selfDefense);
-		event.setAttributeChange(this.healthAttributeName, selfHealth);
-		fightDetails.put("opponent-attack-after", opponentAttack);
-		fightDetails.put("opponent-defense-after", opponentDefense);
-		fightDetails.put("opponent-health-after", opponentHealth);
-		fightDetails.put("self-attack-after", selfAttack);
-		fightDetails.put("self-defense-after", selfDefense);
-		fightDetails.put("self-health-after", selfHealth);
+		event.setAttributeChange(this.attackAttributeName, attrs.selfAttack);
+		event.setAttributeChange(this.defenseAttributeName, attrs.selfDefense);
+		event.setAttributeChange(this.healthAttributeName, attrs.selfHealth);
+		attrs.extractTo(fightDetails, "after");
 		event.addExtraInformation("fight-details", fightDetails);
+		event.addExtraInformation("fight-logs", attributeLog);
 		return true;
 	}
 }
