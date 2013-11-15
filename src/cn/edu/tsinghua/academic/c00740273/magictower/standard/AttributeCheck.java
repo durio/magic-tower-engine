@@ -1,5 +1,6 @@
 package cn.edu.tsinghua.academic.c00740273.magictower.standard;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import org.json.JSONException;
@@ -8,7 +9,9 @@ import org.json.JSONObject;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.Event;
 import cn.edu.tsinghua.academic.c00740273.magictower.standard.mixin.AttributeSelective;
 
-public class AttributeCheck {
+public class AttributeCheck implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	protected AttributeSelective selective;
 	protected String operator;
