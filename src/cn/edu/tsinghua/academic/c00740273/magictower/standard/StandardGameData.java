@@ -10,8 +10,8 @@ public class StandardGameData extends AbstractGameData {
 
 	private static final long serialVersionUID = 1L;
 
-	protected List<String> failureAttributeChecks;
-	protected List<String> successAttributeChecks;
+	protected List<AttributeCheck> failureAttributeChecks;
+	protected List<AttributeCheck> successAttributeChecks;
 	protected String createdFrom;
 
 	public StandardGameData(Coordinate currentCoordinate,

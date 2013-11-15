@@ -64,4 +64,11 @@ public class AttributeSelective implements RegularTileMixin {
 			return new String[] { "==", "<=", ">=" };
 		}
 	}
+
+	/**
+	 * @return the attributeName
+	 */
+	public String getAttributeName() {
+		return this.attributeName;
+	}
 }

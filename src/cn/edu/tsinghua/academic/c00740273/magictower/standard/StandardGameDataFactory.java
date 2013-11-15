@@ -30,17 +30,17 @@ public class StandardGameDataFactory {
 		Map<String, Object> attributes;
 		StandardTile[][][] tiles;
 		StandardRenderer renderer;
-		List<String> failureAttributeChecks;
-		List<String> successAttributeChecks;
+		List<AttributeCheck> failureAttributeChecks;
+		List<AttributeCheck> successAttributeChecks;
 		try {
 			JSONObject dataRoot = new JSONObject(this.data);
 
 			tiles = this.makeTiles(dataRoot); // Populates this.startCoord too.
 			attributes = this.makeAttributes(dataRoot);
-			failureAttributeChecks = this.makeStringList(dataRoot,
-					"failure-checks");
-			successAttributeChecks = this.makeStringList(dataRoot,
-					"success-checks");
+			failureAttributeChecks = this.makeAttributeChecks(dataRoot,
+					"failure-checks", "<", 0L);
+			successAttributeChecks = this.makeAttributeChecks(dataRoot,
+					"success-checks", ">", 0L);
 
 			JSONObject dataRenderer = dataRoot.getJSONObject("renderer");
 			renderer = ClassUtils.makeRenderer(dataRenderer);
@@ -93,12 +93,26 @@ public class StandardGameDataFactory {
 				.makeObjectSerializable(dataAttributes);
 	}
 
-	protected List<String> makeStringList(JSONObject dataRoot, String location)
+	protected List<AttributeCheck> makeAttributeChecks(JSONObject dataRoot,
+			String location, String defaultOperator, long defaultReference)
 			throws JSONException, DataFormatException {
 		JSONArray dataArray = dataRoot.getJSONArray(location);
-		ArrayList<String> arrayList = new ArrayList<String>();
+		ArrayList<AttributeCheck> arrayList = new ArrayList<AttributeCheck>();
 		for (int i = 0; i < dataArray.length(); i++) {
-			arrayList.add(dataArray.getString(i));
+			Object objectCheck = dataArray.get(i);
+			JSONObject jsonObject;
+			if (objectCheck instanceof String) {
+				jsonObject = new JSONObject();
+				jsonObject.put("attribute", objectCheck);
+				jsonObject.put("reference", defaultReference);
+				jsonObject.put("operator", defaultOperator);
+			} else if (objectCheck instanceof JSONObject) {
+				jsonObject = (JSONObject) objectCheck;
+			} else {
+				throw new DataFormatException("Invalid attribute check.");
+			}
+			AttributeCheck attributeCheck = new AttributeCheck(jsonObject);
+			arrayList.add(attributeCheck);
 		}
 		return arrayList;
 	}

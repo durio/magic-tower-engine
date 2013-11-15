@@ -85,22 +85,16 @@ public class StandardGame extends AbstractGame {
 
 	@Override
 	public void simulateEvent(Event event) throws GameTerminationException {
-		for (String key : this.getGameData().failureAttributeChecks) {
-			if (!event.getAttributeChanges().containsKey(key)) {
-				continue;
-			}
-			if (((Number) event.getAttributeChanges().get(key)).longValue() < 0) {
-				throw new GameFailureTerminationException(key
-						+ " is now negative.", event);
+		for (AttributeCheck check : this.getGameData().failureAttributeChecks) {
+			if (check.checkEvent(event)) {
+				throw new GameFailureTerminationException(
+						check.getAttributeName() + " check matches.", event);
 			}
 		}
-		for (String key : this.getGameData().successAttributeChecks) {
-			if (!event.getAttributeChanges().containsKey(key)) {
-				continue;
-			}
-			if (((Number) event.getAttributeChanges().get(key)).longValue() > 0) {
-				throw new GameSuccessTerminationException(key
-						+ " is now positive.", event);
+		for (AttributeCheck check : this.getGameData().successAttributeChecks) {
+			if (check.checkEvent(event)) {
+				throw new GameSuccessTerminationException(
+						check.getAttributeName() + " check matches.", event);
 			}
 		}
 	}
