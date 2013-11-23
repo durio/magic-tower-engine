@@ -114,7 +114,8 @@ public class Fight implements RegularTileMixin {
 			if (selfAttacking) {
 				return new Attributes(this.opponentAttack,
 						this.opponentDefense, this.opponentHealth
-								- (this.selfAttack - this.opponentDefense),
+								- Math.max(0L, this.selfAttack
+										- this.opponentDefense),
 						this.selfAttack, this.selfDefense, this.selfHealth);
 			} else {
 				return new Attributes(this.opponentAttack,
@@ -157,15 +158,14 @@ public class Fight implements RegularTileMixin {
 				opponentHealth, selfAttack, selfDefense, selfHealth);
 		Map<String, Long> fightDetails = new HashMap<String, Long>();
 		attrs.extractTo(fightDetails, "before");
-		if (selfAttack <= opponentDefense) {
+		if (selfAttack <= opponentDefense && opponentAttack <= selfDefense) {
 			fightDetails.put("quick-death", -1L);
 			event.setAttributeChange(this.deathAttributeName, -1L);
 			event.addExtraInformation("fight-details", fightDetails);
 			event.addExtraInformation("fight-logs", null);
 			return true;
-		} else {
-			fightDetails.put("quick-death", 0L);
 		}
+		fightDetails.put("quick-death", 0L);
 		List<Attributes> attributeLog = new ArrayList<Attributes>();
 		attributeLog.add(attrs);
 		boolean selfAttacking = true;
