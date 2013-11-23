@@ -4,8 +4,6 @@ import cn.edu.tsinghua.academic.c00740273.magictower.engine.AbstractGame;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.Coordinate;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.Event;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameData;
-import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameFailureTerminationException;
-import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameSuccessTerminationException;
 import cn.edu.tsinghua.academic.c00740273.magictower.engine.GameTerminationException;
 
 public class StandardGame extends AbstractGame {
@@ -87,14 +85,16 @@ public class StandardGame extends AbstractGame {
 	public void simulateEvent(Event event) throws GameTerminationException {
 		for (AttributeCheck check : this.getGameData().failureAttributeChecks) {
 			if (check.checkEvent(event)) {
-				throw new GameFailureTerminationException(
-						check.getAttributeName() + " check matches.", event);
+				throw new StandardGameFailureTerminationException(
+						check.getAttributeName() + " check matches.", event,
+						check);
 			}
 		}
 		for (AttributeCheck check : this.getGameData().successAttributeChecks) {
 			if (check.checkEvent(event)) {
-				throw new GameSuccessTerminationException(
-						check.getAttributeName() + " check matches.", event);
+				throw new StandardGameSuccessTerminationException(
+						check.getAttributeName() + " check matches.", event,
+						check);
 			}
 		}
 	}
