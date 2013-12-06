@@ -39,7 +39,6 @@ public class Delegate implements RegularTileMixin {
 				targetRegularTile.getMixin().enter(event, this.targetCoord,
 						targetRegularTile, sourceCoord, sourceTile, game);
 			}
-			return false;
 		}
 		return true;
 	}
